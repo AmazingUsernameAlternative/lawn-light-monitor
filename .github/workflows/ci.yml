@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build core + run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y cmake build-essential
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run tests
+        working-directory: build
+        run: ctest --output-on-failure
+
+  # Firmware build job — runs Particle CLI to produce the flashable binary.
+  # Gated on the test job above per EP-6 (no green tests, no binary).
+  firmware-binary:
+    name: Build Particle firmware binary
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    # Only build the deployable binary on main and tagged releases.
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Particle CLI
+        run: npm install -g particle-cli
+
+      - name: Compile firmware for Photon 2
+        run: particle compile photon2 . --saveTo lawn-light-monitor.bin
+
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lawn-light-monitor-firmware
+          path: lawn-light-monitor.bin

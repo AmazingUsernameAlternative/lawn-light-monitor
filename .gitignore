@@ -1,0 +1,19 @@
+# Build output
+build/
+out/
+*.o
+*.a
+*.so
+
+# Particle
+*.bin
+target/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
