@@ -4,7 +4,7 @@ A weatherproof IoT device that measures sunlight at a fixed spot on a lawn
 and tells you, in plain language, whether each common DFW grass species
 is getting enough light to thrive there.
 
-[![CI](https://github.com/YOUR_USER/lawn-light-monitor/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USER/lawn-light-monitor/actions)
+[![CI](https://github.com/AmazingUsernameAlternative/lawn-light-monitor/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USER/lawn-light-monitor/actions)
 
 > Status: **early development** · Built for BitWize LLC per the project PRD.
 
