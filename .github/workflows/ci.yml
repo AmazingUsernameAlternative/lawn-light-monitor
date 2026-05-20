@@ -33,7 +33,10 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     # Only build the deployable binary on main and tagged releases.
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+    # TEMPORARY: disabled until we have Particle firmware (main.cpp) to compile
+    # and a PARTICLE_ACCESS_TOKEN secret configured in repo settings.
+    # Re-enable by changing 'false' back to: github.ref == 'refs/heads/main'
+    if: false
     steps:
       - uses: actions/checkout@v4
 
